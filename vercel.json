@@ -9,11 +9,5 @@
       "src": "**",
       "use": "@vercel/static"
     }
-  ],
-  "rewrites": [
-    {
-      "source": "/api/(.*)",
-      "destination": "/api/index"
-    }
   ]
 }

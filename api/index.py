@@ -114,38 +114,37 @@ def build_excel(results: list) -> bytes:
     buf.seek(0)
     return buf.read()
 
-@app.route('/api/scrape', methods=['POST'])
-def scrape():
+@app.route('/api/index', methods=['POST'])
+def handler():
     data = request.json
-    urls = data.get('urls', [])
-    
-    if not urls:
-        return jsonify({"error": "No URLs provided"}), 400
+    action = data.get('action')
 
-    results = []
-    for url in urls:
-        if url.strip():
-            results.append(fetch_meta(url.strip()))
-            time.sleep(0.3)
+    if action == 'scrape':
+        urls = data.get('urls', [])
+        if not urls:
+            return jsonify({"error": "No URLs provided"}), 400
 
-    return jsonify({"results": results})
+        results = []
+        for url in urls:
+            if url.strip():
+                results.append(fetch_meta(url.strip()))
+                time.sleep(0.3)
+        return jsonify({"results": results})
 
-@app.route('/api/export', methods=['POST'])
-def export():
-    data = request.json
-    results = data.get('results', [])
-    
-    if not results:
-        return jsonify({"error": "No results provided"}), 400
+    elif action == 'export':
+        results = data.get('results', [])
+        if not results:
+            return jsonify({"error": "No results provided"}), 400
 
-    excel_data = build_excel(results)
-    
-    return send_file(
-        io.BytesIO(excel_data),
-        mimetype='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-        as_attachment=True,
-        download_name='meta_data.xlsx'
-    )
+        excel_data = build_excel(results)
+        return send_file(
+            io.BytesIO(excel_data),
+            mimetype='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+            as_attachment=True,
+            download_name='meta_data.xlsx'
+        )
+
+    return jsonify({"error": "Invalid action"}), 400
 
 if __name__ == '__main__':
     app.run(debug=True, port=5000)
