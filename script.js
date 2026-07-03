@@ -24,7 +24,7 @@ document.getElementById('scan-btn').addEventListener('click', async () => {
     document.getElementById('results-container').classList.add('hidden');
 
     try {
-        const response = await fetch('/api/index', {
+        const response = await fetch('/api', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ action: 'scrape', urls })
@@ -53,7 +53,7 @@ document.getElementById('export-btn').addEventListener('click', async () => {
     if (currentResults.length === 0) return;
     
     try {
-        const response = await fetch('/api/index', {
+        const response = await fetch('/api', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ action: 'export', results: currentResults })
