@@ -114,9 +114,14 @@ def build_excel(results: list) -> bytes:
     buf.seek(0)
     return buf.read()
 
-@app.route('/api/index', methods=['POST'])
-def handler():
-    data = request.json
+@app.route('/', defaults={'path': ''}, methods=['POST'])
+@app.route('/<path:path>', methods=['POST'])
+def catch_all(path):
+    try:
+        data = request.json or {}
+    except:
+        data = {}
+
     action = data.get('action')
 
     if action == 'scrape':
@@ -144,7 +149,7 @@ def handler():
             download_name='meta_data.xlsx'
         )
 
-    return jsonify({"error": "Invalid action"}), 400
+    return jsonify({"error": f"Invalid action or path: {path}"}), 400
 
 if __name__ == '__main__':
     app.run(debug=True, port=5000)
