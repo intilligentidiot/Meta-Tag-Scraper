@@ -1,4 +1,4 @@
-streamlit
-requests
-beautifulsoup4
-openpyxl
+Flask==3.0.3
+requests==2.31.0
+beautifulsoup4==4.12.3
+openpyxl==3.1.2

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meta Scraper</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚡</text></svg>">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Header -->
+        <header>
+            <div class="badge">● Meta Scraper</div>
+            <h1>Extract <span>Meta Tags</span><br/>from any URL</h1>
+            <p>// paste URLs → scan → export CSV</p>
+        </header>
+
+        <!-- Input Section -->
+        <section class="input-section">
+            <div class="meta-label">URLs to scan</div>
+            <textarea id="url-input" placeholder="https://example.com&#10;https://another.com"></textarea>
+            
+            <div class="button-group">
+                <button id="scan-btn" class="btn primary">⚡ Scan All</button>
+                <button id="clear-btn" class="btn secondary">Clear</button>
+            </div>
+            
+            <div id="status-text" class="status-text hidden">0 URLs queued</div>
+        </section>
+
+        <!-- Results Section -->
+        <section id="results-container" class="hidden">
+            <div class="results-header">
+                <div id="results-title" class="results-title">Results — 0 pages</div>
+                <button id="export-btn" class="btn download">↓ Export Excel (.xlsx)</button>
+            </div>
+            
+            <div id="results-list"></div>
+        </section>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
