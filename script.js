@@ -30,12 +30,18 @@ document.getElementById('scan-btn').addEventListener('click', async () => {
             body: JSON.stringify({ action: 'scrape', urls })
         });
         
+        if (!response.ok) {
+            const text = await response.text();
+            throw new Error(`HTTP ${response.status}: ${text.substring(0, 100)}`);
+        }
+        
         const data = await response.json();
         currentResults = data.results || [];
         renderResults();
     } catch (error) {
         console.error("Error scraping:", error);
-        statusText.textContent = "Error occurred while scraping.";
+        statusText.classList.remove('hidden');
+        statusText.textContent = `Error: ${error.message}`;
     } finally {
         btn.disabled = false;
         btn.textContent = "⚡ Scan All";
@@ -58,6 +64,11 @@ document.getElementById('export-btn').addEventListener('click', async () => {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ action: 'export', results: currentResults })
         });
+        
+        if (!response.ok) {
+            const text = await response.text();
+            throw new Error(`HTTP ${response.status}: ${text.substring(0, 100)}`);
+        }
         
         const blob = await response.blob();
         const url = window.URL.createObjectURL(blob);

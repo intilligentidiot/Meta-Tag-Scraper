@@ -243,3 +243,39 @@ textarea:focus {
 .hidden {
     display: none !important;
 }
+
+/* --- Mobile Responsiveness --- */
+@media (max-width: 600px) {
+    body {
+        padding: 24px 16px;
+    }
+
+    h1 {
+        font-size: 32px;
+    }
+
+    .button-group {
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .btn.primary, .btn.secondary {
+        width: 100%;
+        flex: none;
+    }
+
+    .results-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+    }
+
+    .btn.download {
+        width: 100%;
+        text-align: center;
+    }
+
+    .result-card {
+        padding: 14px 16px;
+    }
+}
